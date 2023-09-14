@@ -7,17 +7,19 @@ List Urls = [];
 List Bodyy = [];
 
 Future getData() async {
-  final uri = Uri.parse("https://newsapi.org/v2/top-headlines?country=in&apiKey=2148a7f1f80c413bb9f78a16cab3ebfe");
+  final uri = Uri.parse(
+      "https://newsapi.org/v2/top-headlines?country=in&apiKey=2148a7f1f80c413bb9f78a16cab3ebfe");
   final response = await http.get(uri);
   var jsonData = jsonDecode(response.body);
-
+  Future.delayed(Duration(seconds: 2));
   for (var eachDataset in jsonData['articles']) {
-     Titles.add(eachDataset['title']);
-      Urls.add(eachDataset['urlToImage']);
-      Bodyy.add(eachDataset['content']);
-  };
+    Titles.add(eachDataset['title'].toString());
+    Urls.add(eachDataset['urlToImage'].toString());
+    Bodyy.add(eachDataset['content'].toString());
+  }
+  ;
 
-  print(Urls[0]);
+  print(Titles[0]);
 }
 
 class Dataset {
