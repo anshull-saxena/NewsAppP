@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:headlines/detailedpage.dart';
 import 'package:headlines/infopage.dart';
 import 'bodypart.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:headlines/splash.dart';
-import 'package:blur/blur.dart';
+import 'package:headlines/themes.dart';
 
 int count = 10;
 void main() {
@@ -20,10 +21,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          appBarTheme: const AppBarTheme(
-        color: Color(0xff282c33),
-      )),
+      theme: lightTheme,
+      darkTheme: darkTheme,
       home: Splash(),
     );
   }
@@ -48,11 +47,13 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.background,
         bottomNavigationBar: GNav(
             onTabChange: _onTabChange,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            backgroundColor: Color(0xffe9ecef),
+            backgroundColor: Colors.black,
             activeColor: Color(0xffe9ecef),
             color: Color(0xffe9ecef),
             textStyle: TextStyle(fontSize: 19, color: Color(0xffe9ecef)),
@@ -62,11 +63,11 @@ class _MyHomePageState extends State<MyHomePage> {
               GButton(
                 iconSize: 30,
                 icon: LineIcons.home,
-                iconColor: Colors.black,
-                iconActiveColor: Colors.black,
+                iconColor: Color(0xffe9ecef),
+                iconActiveColor: Color(0xffe9ecef),
                 text: "News",
                 textStyle: TextStyle(
-                    color: Colors.black,
+                    color: Color(0xffe9ecef),
                     fontSize: 15,
                     fontWeight: FontWeight.w500),
                 gap: 15,
@@ -74,18 +75,18 @@ class _MyHomePageState extends State<MyHomePage> {
               GButton(
                 iconSize: 30,
                 icon: LineIcons.infoCircle,
-                iconActiveColor: Colors.black,
-                iconColor: Colors.black,
+                iconActiveColor: Color(0xffe9ecef),
+                iconColor: Color(0xffe9ecef),
                 text: "About Us",
                 textStyle: TextStyle(
-                    color: Colors.black,
+                    color: Color(0xffe9ecef),
                     fontSize: 15,
                     fontWeight: FontWeight.w500),
                 gap: 12,
               )
             ]),
         appBar: AppBar(
-          backgroundColor: Color(0xffe9ecef),
+          backgroundColor: Theme.of(context).colorScheme.primary,
           centerTitle: true,
           elevation: 0,
           title: Row(
@@ -144,42 +145,52 @@ class _NewsPageState extends State<NewsPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: List.generate(
                 count,
-                (index) => Container(
-                  decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.grey.shade500,
-                            offset: Offset(4, 4),
-                            blurRadius: 15,
-                            spreadRadius: 1),
-                        BoxShadow(
-                            color: Colors.white,
-                            offset: Offset(-5, -5),
-                            blurRadius: 15,
-                            spreadRadius: 1)
-                      ],
-                      image: DecorationImage(
-                        image: NetworkImage(Urls[index]),
-                        fit: BoxFit.fitHeight,
-                      ),
-                      color: Color(0xffe9ecef),
-                      borderRadius: BorderRadius.circular(20)),
-                  margin: EdgeInsets.all(15),
-                  child: Padding(
-                    padding: EdgeInsets.all(20),
-                    child: Text(
-                      Titles[index],
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          overflow: TextOverflow.fade,
-                          fontSize: 20),
-                    ),
+                (index) => ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Color(0xffe9ecef))
                   ),
-                  alignment: Alignment.bottomCenter,
-                  width: 800,
-                  height: 220,
-                ),
+                    onPressed: (){
+                      setState(() {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => detailedInfo(index: index)));
+                      });
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey.shade500,
+                                offset: Offset(4, 4),
+                                blurRadius: 15,
+                                spreadRadius: 1),
+                            BoxShadow(
+                                color: Colors.white,
+                                offset: Offset(-5, -5),
+                                blurRadius: 15,
+                                spreadRadius: 1)
+                          ],
+                          image: DecorationImage(
+                            image: NetworkImage(Urls[index]),
+                            fit: BoxFit.fitHeight,
+                          ),
+                          color: Colors.blueGrey,
+                          borderRadius: BorderRadius.circular(20)),
+                      margin: EdgeInsets.all(15),
+                      child: Padding(
+                        padding: EdgeInsets.all(20),
+                        child: Text(
+                          Titles[index],
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              overflow: TextOverflow.fade,
+                              fontSize: 20),
+                        ),
+                      ),
+                      alignment: Alignment.bottomCenter,
+                      width: double.maxFinite,
+                      height: 220,
+                    ),)
               ),
             ),
           )),
@@ -198,18 +209,6 @@ class _NewsPageState extends State<NewsPage> {
               icon: Icon(LineIcons.arrowCircleDown)),
         )
       ],
-    );
-  }
-}
-
-class DetailedNewsPage extends StatelessWidget {
-  const DetailedNewsPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.pink,
-      child: Text("gg"),
     );
   }
 }

@@ -2,8 +2,8 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:headlines/main.dart';
 import 'bodypart.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:lottie/lottie.dart';
 
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
@@ -20,8 +20,8 @@ class _SplashState extends State<Splash> {
   }
 
   _navhome() async {
-    await Future.delayed(Duration(milliseconds: 1500));
     getData();
+    await Future.delayed(Duration(milliseconds: 2000));
     Navigator.push(
         context, MaterialPageRoute(builder: ((context) => MyHomePage())));
     print('done');
@@ -32,13 +32,10 @@ class _SplashState extends State<Splash> {
       body: Container(
         alignment: Alignment.center,
         child: AnimatedSplashScreen(
-          splash: Icon(
-            LineIcons.home,
-            size: 100,
-          ),
-          splashIconSize: 100,
+          splash: Lottie.asset('animations/logo.json'),
+          splashIconSize: 350,
           nextScreen: MyHomePage(),
-          splashTransition: SplashTransition.scaleTransition,
+          splashTransition: SplashTransition.fadeTransition,
           pageTransitionType: PageTransitionType.fade,
         ),
       ),
