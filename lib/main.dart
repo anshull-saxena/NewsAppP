@@ -138,62 +138,70 @@ class _NewsPageState extends State<NewsPage> {
       children: [
         Expanded(
           child: SingleChildScrollView(
-              child: Padding(
-            padding: EdgeInsets.all(5),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: List.generate(
-                count,
-                (index) => ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Color(0xffe9ecef))
-                  ),
-                    onPressed: (){
-                      setState(() {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => detailedInfo(index: index)));
-                      });
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.grey.shade500,
-                                offset: Offset(4, 4),
-                                blurRadius: 15,
-                                spreadRadius: 1),
-                            BoxShadow(
-                                color: Colors.white,
-                                offset: Offset(-5, -5),
-                                blurRadius: 15,
-                                spreadRadius: 1)
-                          ],
-                          image: DecorationImage(
-                            image: NetworkImage(Urls[index]),
-                            fit: BoxFit.fitHeight,
+                  count,
+                  (index) => ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Color(0xffe9ecef))),
+                        onPressed: () {
+                          setState(() {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        detailedInfo(index: index)));
+
+                            //zoom
+                            // _width = 800;
+                          });
+                        },
+                        child: Hero(
+                          tag: 'nice${index}',
+                          child: Container(
+                            decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.grey.shade500,
+                                      offset: Offset(4, 4),
+                                      blurRadius: 15,
+                                      spreadRadius: 1),
+                                  BoxShadow(
+                                      color: Colors.white,
+                                      offset: Offset(-5, -5),
+                                      blurRadius: 15,
+                                      spreadRadius: 1)
+                                ],
+                                image: DecorationImage(
+                                  image: NetworkImage(Urls[index]),
+                                  fit: BoxFit.fitHeight,
+                                ),
+                                color: Colors.blueGrey,
+                                borderRadius: BorderRadius.circular(20)),
+                            margin: EdgeInsets.fromLTRB(0, 15, 0, 15),
+                            child: Text(
+                              Titles[index],
+                              style: TextStyle(
+                                  shadows: [
+                                    Shadow(blurRadius: 15),
+                                    Shadow(blurRadius: 100, color: Colors.grey)
+                                  ],
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  overflow: TextOverflow.fade,
+                                  fontSize: 20),
+                            ),
+                            alignment: Alignment.bottomCenter,
+                            width: double.maxFinite,
+                            height: 220,
                           ),
-                          color: Colors.blueGrey,
-                          borderRadius: BorderRadius.circular(20)),
-                      margin: EdgeInsets.all(15),
-                      child: Padding(
-                        padding: EdgeInsets.all(20),
-                        child: Text(
-                          Titles[index],
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              overflow: TextOverflow.fade,
-                              fontSize: 20),
                         ),
-                      ),
-                      alignment: Alignment.bottomCenter,
-                      width: double.maxFinite,
-                      height: 220,
-                    ),)
-              ),
+                      )),
             ),
-          )),
+          ),
         ),
         Visibility(
           visible: count < 20,

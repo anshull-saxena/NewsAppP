@@ -6,6 +6,9 @@ List Titles = [];
 List Urls = [];
 List Bodyy = [];
 
+//List of Data
+List<Dataset> dataset =[];
+
 Future getData() async {
   final uri = Uri.parse(
       "https://newsapi.org/v2/top-headlines?country=in&apiKey=2148a7f1f80c413bb9f78a16cab3ebfe");
@@ -16,8 +19,23 @@ Future getData() async {
     Titles.add(eachDataset['title'].toString());
     Urls.add(eachDataset['urlToImage'].toString());
     Bodyy.add(eachDataset['content'].toString());
-  }
-  ;
+  };
+
+
+// int index;
+//   dataset[index++].fromJson(Map<String, dynamic> json){
+//   headline = ['title'].toString();
+//   img = ['urlToImage'].toString();
+//   newsBody = ['content'].toString();
+//   }
+
+//
+
+//   Map<String, dynamic> toJson()=> {
+//   'headline':this.headline;
+//   'img':this.img;
+//   'newsBody':body;
+//   };
 
   print(Titles[0]);
 }
